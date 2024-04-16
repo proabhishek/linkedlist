@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linked List Problems</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 20px;
+      background-color: #1c1c1c;
+      color: #e6e6e6;
+    }
+    h1 {
+      text-align: center;
+      color: #00ff00;
+      margin-bottom: 30px;
+      font-size: 36px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 5px #00ff00;
+    }
+    .problem {
+      background-color: #2d2d2d;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    .problem:hover {
+      transform: translateY(-5px);
+    }
+    .problem h2 {
+      color: #ffff00;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+    .problem p {
+      color: #e6e6e6;
+      line-height: 1.6;
+    }
+    .test-cases {
+      background-color: #1c1c1c;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      border: 1px solid #00ff00;
+    }
+    .test-cases pre {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      white-space: pre-wrap;
+      color: #00ff00;
+    }
+    .solve-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .solve-button {
+      display: inline-block;
+      padding: 12px 24px;
+      color: #1c1c1c;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-right: 15px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .solve-button:hover {
+      transform: scale(1.05);
+    }
+    .solve-button.leetcode {
+      background-color: #ff9900;
+    }
+    .solve-button.leetcode:hover {
+      background-color: #ff6600;
+    }
+    .solve-button.geeksforgeeks {
+      background-color: #00ff00;
+    }
+    .solve-button.geeksforgeeks:hover {
+      background-color: #00cc00;
+    }
+    .solve-button.hackerrank {
+      background-color: #00ffff;
+    }
+    .solve-button.hackerrank:hover {
+      background-color: #00cccc;
+    }
+    .submit-solution {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #1c1c1c;
+      border-radius: 8px;
+      border: 1px solid #00ff00;
+    }
+    .submit-solution label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #e6e6e6;
+    }
+    .submit-solution input[type="text"],
+    .submit-solution textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #00ff00;
+      border-radius: 4px;
+      font-size: 16px;
+      background-color: #2d2d2d;
+      color: #e6e6e6;
+    }
+    .submit-solution button {
+      padding: 10px 20px;
+      background-color: #ffff00;
+      color: #1c1c1c;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .submit-solution button:hover {
+      background-color: #cccc00;
+    }
+    .generate-zip {
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    .generate-zip input[type="text"] {
+      padding: 10px;
+      margin-right: 15px;
+      border: 1px solid #00ff00;
+      border-radius: 4px;
+      font-size: 16px;
+      background-color: #2d2d2d;
+      color: #e6e6e6;
+    }
+    .generate-zip button {
+      padding: 10px 20px;
+      background-color: #00ffff;
+      color: #1c1c1c;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .generate-zip button:hover {
+      background-color: #00cccc;
+    }
+    .easy {
+      border-left: 6px solid #00ff00;
+    }
+    .medium {
+      border-left: 6px solid #ffff00;
+    }
+    .hard {
+      border-left: 6px solid #ff0000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Linked List Problems</h1>
+  <div class="generate-zip">
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="text" id="email" placeholder="Your Email">
+    <button onclick="generateZip()">Generate Zip</button>
+  </div>
+  <div id="problemList"></div>
+  <br /> <br />
+  <footer>
+    Created by <a href="https://www.linkedin.com/in/proabhishek/" target="_blank">Abhishek Shankar Choudhary</a>
+  </footer>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> -->
+  <script src="jszip.min.js"></script>
+<script src="FileSaver.min.js"></script>
+  
+  <script>
+    const problems = [
+      {
+        title: "Reverse a Linked List",
+        description: "Reverse a singly linked list in-place without using extra space.",
+        constraints: [
+          "The input linked list should be singly linked.",
+          "The function should reverse the linked list in-place without using extra space."
+        ],
+        testCases: [
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL",
+            output: "5 -> 4 -> 3 -> 2 -> 1 -> NULL"
+          },
+          {
+            input: "1 -> NULL",
+            output: "1 -> NULL"
+          },
+          {
+            input: "NULL",
+            output: "NULL"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/reverse-linked-list/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/reverse-a-linked-list/", className: "geeksforgeeks" }
+        ],
+        difficulty: "easy"
+      },
+      {
+        title: "Find the Middle Node in a Linked List",
+        description: "Find the middle node of a singly linked list. If the number of nodes is even, return the second middle node.",
+        constraints: [
+          "The input linked list should be singly linked.",
+          "If the number of nodes is even, return the second middle node."
+        ],
+        testCases: [
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL",
+            output: "3"
+          },
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> 6 -> NULL",
+            output: "4"
+          },
+          {
+            input: "1 -> NULL",
+            output: "1"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/middle-of-the-linked-list/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/write-a-c-function-to-print-the-middle-of-the-linked-list/", className: "geeksforgeeks" }
+        ],
+        difficulty: "medium"
+      },
+      {
+        title: "Find the Kth Node from the End of a Linked List",
+        description: "Find the Kth node from the end of a singly linked list.",
+        constraints: [
+          "The input linked list should be singly linked.",
+          "1 <= k <= number of nodes in the linked list."
+        ],
+        testCases: [
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL, k = 2",
+            output: "4"
+          },
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL, k = 5",
+            output: "1"
+          },
+          {
+            input: "1 -> NULL, k = 1",
+            output: "1"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/nth-node-from-the-end-of-a-linked-list/", className: "geeksforgeeks" }
+        ]
+      },
+      {
+        title: "Check if a Linked List has Loops",
+        description: "Check if a singly linked list contains a loop.",
+        constraints: [
+          "The input linked list should be singly linked."
+        ],
+        testCases: [
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> 2 (loop)",
+            output: "true"
+          },
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL",
+            output: "false"
+          },
+          {
+            input: "1 -> 1 (self loop)",
+            output: "true"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/linked-list-cycle/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/", className: "geeksforgeeks" }
+        ],
+        difficulty: "medium"
+      },
+      {
+        title: "Find the Starting Node of a Cycle in a Linked List",
+        description: "Find the starting node of a cycle in a singly linked list.",
+        constraints: [
+          "The input linked list should be singly linked.",
+          "The linked list may or may not contain a cycle."
+        ],
+        testCases: [
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> 2 (loop)",
+            output: "2"
+          },
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL",
+            output: "NULL"
+          },
+          {
+            input: "1 -> 1 (self loop)",
+            output: "1"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/linked-list-cycle-ii/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/find-first-node-of-loop-in-a-linked-list/", className: "geeksforgeeks" }
+        ]
+      },
+      {
+        title: "Find the Intersection Point of Two Linked Lists",
+        description: "Find the node at which the intersection of two singly linked lists begins.",
+        constraints: [
+          "The input linked lists should be singly linked.",
+          "The linked lists may or may not intersect."
+        ],
+        testCases: [
+          {
+            input: "List 1: 1 -> 2 -> 3 -> 4 -> 5 -> NULL, List 2: 6 -> 7 -> 4 -> 5 -> NULL",
+            output: "4"
+          },
+          {
+            input: "List 1: 1 -> 2 -> 3 -> 4 -> 5 -> NULL, List 2: 6 -> 7 -> 8 -> 9 -> NULL",
+            output: "NULL"
+          },
+          {
+            input: "List 1: 1 -> NULL, List 2: 1 -> NULL",
+            output: "1"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/intersection-of-two-linked-lists/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/write-a-function-to-get-the-intersection-point-of-two-linked-lists/", className: "geeksforgeeks" }
+        ]
+      },
+      {
+        title: "Alternating Split of a Linked List",
+        description: "Split a singly linked list into two lists, where the first list contains the alternating nodes starting from the first node, and the second list contains the alternating nodes starting from the second node.",
+        constraints: [
+          "The input linked list should be singly linked.",
+          "The resulting linked lists should contain alternating elements from the original list."
+        ],
+        testCases: [
+          {
+            input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL",
+            output: "List 1: 1 -> 3 -> 5 -> NULL, List 2: 2 -> 4 -> NULL"
+          },
+          {
+            input: "1 -> 2 -> 3 -> NULL",
+            output: "List 1: 1 -> 3 -> NULL, List 2: 2 -> NULL"
+          },
+          {
+            input: "1 -> NULL",
+            output: "List 1: 1 -> NULL, List 2: NULL"
+          }
+        ],
+        links: [
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/alternating-split-of-a-given-singly-linked-list/", className: "geeksforgeeks" },
+          { platform: "HackerRank", url: "https://www.hackerrank.com/challenges/alternating-split-of-a-linked-list/problem", className: "hackerrank" }
+        ]
+      },
+      {
+        title: "Clone a Linked List with Next and Random Pointers",
+        description: "Create a deep copy of a singly linked list where each node contains an additional random pointer that could point to any node in the list or null.",
+        constraints: [
+          "The input linked list should be singly linked with an additional random pointer.",
+          "The cloned linked list should have the same structure as the original list."
+        ],
+        testCases: [
+          {
+            input: "Original List: Node -> Next -> Random, 1 -> 2 -> 3, | | |, v v v, 3 1 2",
+            output: "Cloned List: Node -> Next -> Random, 1' -> 2' -> 3', | | |, v v v, 3' 1' 2'"
+          },
+          {
+            input: "Original List: Node -> Next -> Random, 1 -> 2 -> NULL, | |, v v, 2 1",
+            output: "Cloned List: Node -> Next -> Random, 1' -> 2' -> NULL, | |, v v, 2' 1'"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/copy-list-with-random-pointer/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/", className: "geeksforgeeks" }
+        ]
+      },
+      {
+        title: "Check if a Linked List is a Palindrome",
+        description: "Check if a singly linked list is a palindrome.",
+        constraints: [
+          "The input linked list should be singly linked.",
+          "The function should return true if the linked list is a palindrome, false otherwise."
+        ],
+        testCases: [
+          {
+            input: "1 -> 2 -> 3 -> 2 -> 1 -> NULL",
+            output: "true"
+          },
+          {
+            input: "1 -> 2 -> 3 -> 3 -> 2 -> 1 -> NULL",
+            output: "true"
+          },
+          {
+            input: "1 -> 2 -> 3 -> 4 -> NULL",
+            output: "false"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/palindrome-linked-list/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/function-to-check-if-a-singly-linked-list-is-palindrome/", className: "geeksforgeeks" }
+        ]
+      },
+      {
+        title: "Merge Two Sorted Linked Lists",
+        description: "Merge two sorted singly linked lists into a single sorted linked list.",
+        constraints: [
+          "The input linked lists should be singly linked and sorted in non-decreasing order.",
+          "The merged linked list should also be sorted in non-decreasing order."
+        ],
+        testCases: [
+          {
+            input: "List 1: 1 -> 3 -> 5 -> NULL, List 2: 2 -> 4 -> 6 -> NULL",
+            output: "1 -> 2 -> 3 -> 4 -> 5 -> 6 -> NULL"
+          },
+          {
+            input: "List 1: 1 -> 2 -> 3 -> NULL, List 2: NULL",
+            output: "1 -> 2 -> 3 -> NULL"
+          },
+          {
+            input: "List 1: NULL, List 2: 1 -> 2 -> 3 -> NULL",
+            output: "1 -> 2 -> 3 -> NULL"
+          }
+        ],
+        links: [
+          { platform: "LeetCode", url: "https://leetcode.com/problems/merge-two-sorted-lists/", className: "leetcode" },
+          { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/", className: "geeksforgeeks" }
+        ]
+      },
+      {
+        title: "Merge Sort on a Linked List",
+        description: "Sort a singly linked list using the merge sort algorithm.",
+        constraints: [
+          "The input linked list should be singly linked.",
+          "The function should sort the linked list using the merge sort algorithm."
+        ],
+        testCases: [
+          {
+            input: "4 -> 2 -> 1-> 3 -> 5 -> NULL",
+output: "1 -> 2 -> 3 -> 4 -> 5 -> NULL"
+},
+{
+input: "5 -> 4 -> 3 -> 2 -> 1 -> NULL",
+output: "1 -> 2 -> 3 -> 4 -> 5 -> NULL"
+},
+{
+input: "1 -> NULL",
+output: "1 -> NULL"
+}
+],
+links: [
+{ platform: "LeetCode", url: "https://leetcode.com/problems/sort-list/", className: "leetcode" },
+{ platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/merge-sort-for-linked-list/", className: "geeksforgeeks" }
+]
+},
+{
+title: "Find the Greatest Value Node on the Right Side of Each Node",
+description: "Modify the value of each node in a singly linked list to the greatest value node on its right side.",
+constraints: [
+"The input linked list should be singly linked.",
+"The function should modify the value of each node to the greatest value node on its right side."
+],
+testCases: [
+{
+input: "2 -> 5 -> 1 -> 7 -> 3 -> 4 -> NULL",
+output: "7 -> 7 -> 7 -> 4 -> 4 -> 0 -> NULL"
+},
+{
+input: "1 -> 2 -> 3 -> 4 -> 5 -> NULL",
+output: "5 -> 5 -> 5 -> 5 -> 0 -> NULL"
+},
+{
+input: "5 -> 4 -> 3 -> 2 -> 1 -> NULL",
+output: "0 -> 0 -> 0 -> 0 -> 0 -> NULL"
+}
+],
+links: [
+{ platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/replace-every-element-with-the-greatest-on-right-side/", className: "geeksforgeeks" },
+{ platform: "HackerRank", url: "https://www.hackerrank.com/challenges/replace-elements-with-greatest-element-on-right-side/problem", className: "hackerrank" }
+]
+},
+{
+title: "Implement a Memory-Efficient Doubly Linked List",
+description: "Implement a memory-efficient doubly linked list using a single pointer for each node.",
+constraints: [
+"The doubly linked list should be implemented using a single pointer for each node.",
+"The space complexity should be O(n), where n is the number of nodes in the linked list."
+],
+testCases: [
+{
+input: "AddFirst(1), AddFirst(2), AddFirst(3)",
+output: "Forward: 3 <-> 2 <-> 1, Backward: 1 <-> 2 <-> 3"
+},
+{
+input: "AddLast(1), AddLast(2), AddLast(3)",
+output: "Forward: 1 <-> 2 <-> 3, Backward: 3 <-> 2 <-> 1"
+},
+{
+input: "AddFirst(1), AddLast(2), AddFirst(3), AddLast(4)",
+output: "Forward: 3 <-> 1 <-> 2 <-> 4, Backward: 4 <-> 2 <-> 1 <-> 3"
+}
+],
+links: [
+{ platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/xor-linked-list-a-memory-efficient-doubly-linked-list-set-1/", className: "geeksforgeeks" }
+]
+},
+{
+title: "Sort a Linked List with 0s, 1s, and 2s",
+description: "Sort a singly linked list containing only 0s, 1s, and 2s in ascending order.",
+constraints: [
+"The input linked list should be singly linked.",
+"Each node's value is either 0, 1, or 2.",
+"The function should sort the linked list in ascending order."
+],
+testCases: [
+{
+input: "1 -> 0 -> 2 -> 1 -> 2 -> 0 -> NULL",
+output: "0 -> 0 -> 1 -> 1 -> 2 -> 2 -> NULL"
+},
+{
+input: "2 -> 1 -> 0 -> NULL",
+output: "0 -> 1 -> 2 -> NULL"
+},
+{
+input: "1 -> 1 -> 1 -> NULL",
+output: "1 -> 1 -> 1 -> NULL"
+}
+],
+links: [
+{ platform: "LeetCode", url: "https://leetcode.com/problems/sort-list/", className: "leetcode" },
+{ platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/sort-a-linked-list-of-0s-1s-or-2s/", className: "geeksforgeeks" }
+]
+},
+{
+title: "Add 1 to the Number Represented by a Linked List",
+description: "Add 1 to the number represented by a singly linked list, where each node represents a digit of the number, with the least significant digit at the head.",
+constraints: [
+"The input linked list should be singly linked.",
+"Each node represents a digit of a number, with the least significant digit at the head.",
+"The function should add 1 to the number and return the resulting linked list."
+],
+testCases: [
+{
+input: "1 -> 2 -> 3 -> NULL (representing 321)",
+output: "2 -> 2 -> 3 -> NULL (representing 322)"
+},
+{
+input: "9 -> 9 -> 9 -> NULL (representing 999)",
+output: "0 -> 0 -> 0 -> 1 -> NULL (representing 1000)"
+},
+{
+input: "0 -> NULL (representing 0)",
+output: "1 -> NULL (representing 1)"
+}
+],
+links: [
+{ platform: "LeetCode", url: "https://leetcode.com/problems/plus-one-linked-list/", className: "leetcode" },
+{ platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/add-1-number-represented-linked-list/", className: "geeksforgeeks" }
+]
+}
+];
+const problemList = document.getElementById("problemList");
+
+let level = ["easy", "medium", "hard"];
+problems.forEach((problem,index) => {
+  const problemDiv = document.createElement("div");
+  problemDiv.className = `problem ${level[parseInt(Math.random() * 3)]}`;
+  
+  const title = document.createElement("h2");
+  title.textContent = problem.title;
+  problemDiv.appendChild(title);
+  
+  const description = document.createElement("p");
+  description.textContent = problem.description;
+  problemDiv.appendChild(description);
+  
+  if (problem.constraints) {
+    const constraintsHeading = document.createElement("h3");
+    constraintsHeading.textContent = "Constraints:";
+    problemDiv.appendChild(constraintsHeading);
+    
+    const constraintsList = document.createElement("ul");
+    problem.constraints.forEach(constraint => {
+      const constraintItem = document.createElement("li");
+      constraintItem.textContent = constraint;
+      constraintsList.appendChild(constraintItem);
+    });
+    problemDiv.appendChild(constraintsList);
+  }
+  
+  if (problem.testCases) {
+    const testCasesHeading = document.createElement("h3");
+    testCasesHeading.textContent = "Test Cases:";
+    problemDiv.appendChild(testCasesHeading);
+    
+    problem.testCases.forEach(testCase => {
+      const testCaseDiv = document.createElement("div");
+      testCaseDiv.className = "test-cases";
+      
+      const input = document.createElement("pre");
+      input.textContent = `Input: ${testCase.input}`;
+      testCaseDiv.appendChild(input);
+      
+      const output = document.createElement("pre");
+      output.textContent = `Output: ${testCase.output}`;
+      testCaseDiv.appendChild(output);
+      
+      problemDiv.appendChild(testCaseDiv);
+    });
+  }
+  
+  const solveButtons = document.createElement("div");
+  solveButtons.className = "solve-buttons";
+  problem.links.forEach(link => {
+    const solveButton = document.createElement("a");
+    solveButton.className = `solve-button ${link.className}`;
+    solveButton.href = link.url;
+    solveButton.target = "_blank";
+    solveButton.textContent = `Solve on ${link.platform}`;
+    solveButtons.appendChild(solveButton);
+  });
+  problemDiv.appendChild(solveButtons);
+
+  const submitSolution = document.createElement("div");
+      submitSolution.className = "submit-solution";
+      
+      const codeLabel = document.createElement("label");
+      codeLabel.textContent = "Code:";
+      submitSolution.appendChild(codeLabel);
+      
+      const codeInput = document.createElement("textarea");
+      codeInput.rows = 5;
+      submitSolution.appendChild(codeInput);
+      
+      const linkLabel = document.createElement("label");
+      linkLabel.textContent = "Solution Link:";
+      submitSolution.appendChild(linkLabel);
+      
+      const linkInput = document.createElement("input");
+      linkInput.type = "text";
+      submitSolution.appendChild(linkInput);
+      
+      const saveButton = document.createElement("button");
+      saveButton.textContent = "Save Solution";
+      saveButton.onclick = () => saveSolution(index, codeInput.value, linkInput.value);
+      submitSolution.appendChild(saveButton);
+      
+      problemDiv.appendChild(submitSolution);
+  
+  problemList.appendChild(problemDiv);
+});
+
+function saveSolution(problemIndex, code, link) {
+      const solution = {
+        code: code,
+        link: link
+      };
+      localStorage.setItem(`problem${problemIndex}`, JSON.stringify(solution));
+      alert("Solution saved!");
+    }
+
+    function generateZip() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+
+  const zip = new JSZip();
+  const problemsFolder = zip.folder("problems");
+
+  problems.forEach((problem, index) => {
+    const solution = localStorage.getItem(`problem${index}`);
+    const solutionData = solution ? JSON.parse(solution) : {};
+
+    const problemContent = `Problem: ${problem.title}
+Description: ${problem.description}
+Constraints: ${problem.constraints.join(", ")}
+Test Cases:
+${problem.testCases.map(testCase => `Input: ${testCase.input}, Output: ${testCase.output}`).join("\n")}
+
+Solution Code:
+${solutionData.code || ""}
+
+Solution Link: ${solutionData.link || ""}
+`;
+
+    problemsFolder.file(`problem${index + 1}.txt`, problemContent);
+  });
+
+  const userInfo = `Name: ${name}
+Email: ${email}
+`;
+  zip.file("user_info.txt", userInfo);
+
+  zip.generateAsync({ type: "blob" })
+    .then(function (content) {
+      saveAs(content, "linked_list_problems.zip");
+    });
+}
+</script> </body> </html> 

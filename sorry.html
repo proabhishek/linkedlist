@@ -1,0 +1,107 @@
+<!-- sorry.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorry, Cheater!</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      background-color: #1c1c1c;
+      color: #00ff00;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 5px #00ff00;
+    }
+    .message {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .countdown {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #ff0000;
+    }
+    .back-button {
+      padding: 12px 24px;
+      background-color: #ffff00;
+      color: #1c1c1c;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .back-button:hover {
+      background-color: #cccc00;
+    }
+    .punch-animation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      background-image: url('punch.png');
+      background-size: cover;
+      animation: punch 1s ease-in-out;
+      display: none;
+    }
+    @keyframes punch {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(2);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Sorry, Cheater!</h1>
+  <p class="message">Oops! It seems like you can't guarantee to follow the Coder's Oath. We're sorry, but we can't let you proceed with the coding challenges.</p>
+  <p class="message">Please kindly get lost, as your laptop will be hacked in...</p>
+  <div id="countdown" class="countdown"></div>
+  <a href="index.html" class="back-button">Go Back and Accept the Oath</a>
+  <div id="punchAnimation" class="punch-animation"></div>
+  <br /> <br />
+  <footer>
+    Created by <a href="https://www.linkedin.com/in/proabhishek/" target="_blank">Abhishek Shankar Choudhary</a>
+  </footer>
+  <script>
+    var countdownElement = document.getElementById('countdown');
+    var countdownTime = 60;
+    var punchAnimation = document.getElementById('punchAnimation');
+
+    function startCountdown() {
+      countdownElement.textContent = countdownTime;
+      countdownTime--;
+
+      if (countdownTime < 0) {
+        countdownElement.textContent = 'Hacked!';
+        return;
+      }
+
+      setTimeout(startCountdown, 1000);
+    }
+
+    function showPunchAnimation() {
+      punchAnimation.style.display = 'block';
+      setTimeout(function() {
+        punchAnimation.style.display = 'none';
+      }, 1000);
+    }
+
+    startCountdown();
+    showPunchAnimation();
+  </script>
+</body>
+</html>
